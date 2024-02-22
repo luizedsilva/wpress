@@ -22,6 +22,7 @@ app.use(
   })
 );
 
+
 //static
 app.use(express.static("public"));
 

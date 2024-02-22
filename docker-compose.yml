@@ -2,25 +2,27 @@ version: '3'
 services:
   app:
     build: .
-    command: npm start
+    user: node
+    working_dir: /home/node/app
     ports:
       - '8080:8080'
     volumes:
-      - .:/app
+      - ./:/home/node/app
     depends_on:
       - "db"
     networks:
       - app-network
+    command: "npm start"
   db:
     image: mysql:5.7
     restart: always
     environment:
       MYSQL_DATABASE: $DB_DATABASE
       # MYSQL_USER: $DB_USER
-      # MYSQL_PASSWORD: $DB_PASSWORD
-      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
     volumes:
-      - ./db/var:/var/lib/mysql
+      - ./db:/var/lib/mysql
     ports:
       - '3306:$DB_PORT'
     networks:
@@ -30,3 +32,4 @@ networks:
     driver: bridge
 volumes:
   db:
+
